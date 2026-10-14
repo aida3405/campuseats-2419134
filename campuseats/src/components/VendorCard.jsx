@@ -1,8 +1,8 @@
 function VendorCard() {
     const vendor = {
-        name: 'Masakan Malaysia',
-        location: 'Seksyen 6, Kota Damansara',
-        openHours: '2:00 PM - 6:00 PM',
+        name: 'Kafe Mahallah Aminah',
+        location: 'Mahallah Aminah, Block D',
+        openHours: '8:00 am - 10:00 pm',
         isOpen: true,
     }
     
