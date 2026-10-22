@@ -20,7 +20,10 @@ function App() {
   const cartCount = cart.reduce((total, line) => total + line.qty, 0)
 
   const [lastOrder, setLastOrder] = useState(null)
-  
+
+  //personal feature: spice level badge and filter
+  const [maxSpice, setMaxSpice] = useState(3)
+
   //fetch vendors data from the API endpoint
   useEffect(() => {
     const controller = new AbortController()
@@ -92,11 +95,20 @@ function App() {
     //find current selected vendor safely
     const selectedVendor = vendors.find((v) => v.id === selectedVendorId)
 
+    //filtered menu using maxSpice state
+    const filteredMenu = selectedVendor ? selectedVendor.menu.filter((item) => {
+      const spice = item.spiceLevel !== undefined ? item.spiceLevel : 0
+      return spice === maxSpice
+    }) : []
+
     let content
     if (view === 'cart') {
       content = (
-        <CartPage cart={cart} onChangeQty={handleChangeQty}
-        onRemove={handleRemove} onPlaceOrder={handlePlaceOrder} />
+        <CartPage 
+        cart={cart} 
+        onChangeQty={handleChangeQty}
+        onRemove={handleRemove} 
+        onPlaceOrder={handlePlaceOrder} />
       )
     } else if (view === 'done') {
       //b5:show pickup time and total
@@ -138,7 +150,22 @@ function App() {
         {selectedVendor && (
           <section>
             <h2 className="section-title">Menu: {selectedVendor.name}</h2>
-            <MenuList items={selectedVendor.menu} onAdd={handleAddToCart} />
+
+            <div className="filter-container" style={{ margin: '1rem 0' }}>
+              <label htmlFor="spiceRange">
+                Max Spice Level: <strong>{maxSpice}</strong>
+              </label>
+              <input
+                type="range"
+                id="spiceRange"
+                min="0"
+                max="3"
+                value={maxSpice}
+                onChange={(e) => setMaxSpice(Number(e.target.value))} 
+                style={{ display: 'block', width: '100%', maxWidth: '300px', marginTop: '0.5rem' }}
+              />
+            </div>
+            <MenuList items={filteredMenu} onAdd={handleAddToCart} />
           </section>
         )}
       </>
@@ -147,8 +174,10 @@ function App() {
 
   return (
     <>
-      <Header cartCount={cartCount} 
-        onShowMenu={() => setView('menu')} onShowCart={() => setView('cart')}/>
+      <Header 
+        cartCount={cartCount} 
+        onShowMenu={() => setView('menu')} 
+        onShowCart={() => setView('cart')}/>
       <main className="container">{content}</main>
       <Footer />
     </>
