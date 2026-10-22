@@ -1,0 +1,276 @@
+[
+    {
+        "id": "2419134-MakanPagi",
+        "name": "Makan Pagi",
+        "location": "Mahallah Aminah, Block D",
+        "openHours": "8:00 am - 12:00 pm",
+        "isOpen": true,
+        "menu": [
+            { 
+                "id": "2419134-m1",
+                "name": "Nasi Lemak",
+                "description": "Coconut rice with sambal and anchovies", 
+                "price": 2.5,
+                "category": "Rice", 
+                "spiceLevel": 2, 
+                "popular": true, 
+                "available": true 
+            },
+            { 
+                "id": "2419134-m2", 
+                "name": "Nasi Lemak Ayam", 
+                "description": "Cocunut rice with fried chicken and sambal", 
+                "price": 6,
+                "category": "Rice", 
+                "spiceLevel": 2, 
+                "popular": false, 
+                "available": false 
+            },
+            { 
+                "id": "2419134-m3", 
+                "name": "Nasi Lemak Telur", 
+                "description": "Coconut rice with fried egg and sambal", 
+                "price": 3.5, 
+                "category": "Rice", 
+                "spiceLevel": 1, 
+                "popular": false, 
+                "available": true 
+            },
+            { 
+                "id": "2419134-m4", 
+                "name": "Mee Goreng", 
+                "description": "Fried noodles with vegetables and meat", 
+                "price": 4, 
+                "category": "Noodles", 
+                "spiceLevel": 2, 
+                "popular": false, 
+                "available": true 
+            },
+            { 
+                "id": "2419134-m5", 
+                "name": "Bihun Goreng", 
+                "description": "Fried bean thread noodles with vegetables", 
+                "price": 3.5, 
+                "category": "Noodles", 
+                "spiceLevel": 1, 
+                "popular": false, 
+                "available": false 
+            },
+            { 
+                "id": "2419134-m6", 
+                "name": "Teh Tarik", 
+                "description": "Pulled tea with milk", 
+                "price": 2.5,
+                "category": "Drinks", 
+                "spiceLevel": 0, 
+                "popular":true, 
+                "available": true 
+            },
+            { 
+                "id": "2419134-m7", 
+                "name": "Kopi O", 
+                "description": "Black coffee", 
+                "price": 2,
+                "category": "Drinks", 
+                "spiceLevel": 0, 
+                "popular": false, 
+                "available": true 
+            },
+            { 
+                "id": "2419134-m8", 
+                "name": "Teh O Ais", 
+                "description": "Iced tea with water", 
+                "price": 2.5,
+                "category": "Drinks", 
+                "spiceLevel": 0, 
+                "popular": false, 
+                "available": false 
+            }
+        ]
+    },
+    {
+        "id": "2414362-Ruang-Café",
+        "name": "Ruang Café",
+        "location": "Mahallah Maryam, Central Facility",
+        "openHours": "8:00 am - 10:00 pm",
+        "isOpen": true,
+        "menu": [
+            {
+                "id": "2414362-m1",
+                "name": "Iced Matcha Latte",
+                "description": "Smooth Japanese matcha with creamy milk.",
+                "price": 8.0,
+                "category": "Drinks",
+                "available": true
+            },
+            {
+                "id": "2414362-m2",
+                "name": "Strawberry Matcha",
+                "description": "Sweet strawberry layered with earthy matcha.",
+                "price": 10.5,
+                "category": "Drinks",
+                "available": true
+            },
+            {
+                "id": "2414362-m3",
+                "name": "Iced Spanish Latte",
+                "description": "Espresso with silky, sweetened milk.",
+                "price": 8.0,
+                "category": "Drinks",
+                "available": true
+            },
+            {
+                "id": "2414362-m4",
+                "name": "Cloud Chocolate",
+                "description": "Rich chocolate blended with creamy milk",
+                "price": 7.0,
+                "category": "Drinks",
+                "available": true
+            },
+            {
+                "id": "2414362-m5",
+                "name": "Peach Iced Tea",
+                "description": "Light, fruity and refreshing.",
+                "price": 4.0,
+                "category": "Drinks",
+                "available": true
+            },
+            {
+                "id": "2414362-m6",
+                "name": "Teriyaki Chicken Bowl",
+                "description": "Grilled chicken, rice and savoury teriyaki sauce.",
+                "price": 10.5,
+                "category": "Cafe Mains",
+                "available": true
+            },
+            {
+                "id": "2414362-m7",
+                "name": "Crispy Chicken Burger",
+                "description": "Crispy chicken patty served on a toasted bun with lettuce and tomato.",
+                "price": 10.0,
+                "category": "Cafe Mains",
+                "available": true
+            },
+            {
+                "id": "2414362-m8",
+                "name": "Chicken Aglio Olio",
+                "description": "A traditional Italian dish with garlic, olive oil and chicken.",
+                "price": 11.0,
+                "category": "Cafe Mains",
+                "available": false
+            },
+            {
+                "id": "2414362-m9",
+                "name": "Creamy Chicken Pasta",
+                "description": "Creamy sauce, tender chicken and herbs.",
+                "price": 12.0,
+                "category": "Cafe Mains",
+                "available": false
+            },
+            {
+                "id": "2414362-m10",
+                "name": "Butter Croissant",
+                "description": "Flaky, buttery and freshly baked style.",
+                "price": 4.5,
+                "category": "Sweet Treats",
+                "available": true
+            },
+            {
+                "id": "2414362-m11",
+                "name": "Matcha Cookies",
+                "description": "Buttery cookies with a gentle matcha flavour.",
+                "price": 5.0,
+                "category": "Sweet Treats",
+                "available": true
+            },
+            {
+                "id": "2414362-m12",
+                "name": "Basque Cheesecake",
+                "description": "Creamy cheesecake with a caramelised top.",
+                "price": 6.0,
+                "category": "Sweet Treats",
+                "available": true
+            },
+            {
+                "id": "2414362-m13",
+                "name": "Matchamisu",
+                "description": "Creamy layered dessert with a matcha finish.",
+                "price": 10.0,
+                "category": "Sweet Treats",
+                "available": true
+            }
+        ]
+    },
+    {
+        "id": "2416264-cake-izzmn",
+        "name": "Cake Izzmn",
+        "location": "Mahallah Maryam, Block D",
+        "openHours": "8:00 am - 11:00 pm",
+        "isOpen": true,
+        "menu": [
+            {
+                "id": "2416264-m1",
+                "name": "Chocolate Cake",
+                "price": 6.0,
+                "category": "Desserts",
+                "popular": true
+            },
+            {
+                "id": "2416264-m2",
+                "name": "Burnt Cheesecake",
+                "price": 7.0,
+                "category": "Desserts",
+                "popular": true
+            },
+            {
+                "id": "2416264-m3",
+                "name": "Red Velvet Slice",
+                "price": 6.5,
+                "category": "Desserts",
+                "popular": false
+            },
+            {
+                "id": "2416264-m4",
+                "name": "Fruit Tartlet",
+                "price": 5.0,
+                "category": "Desserts",
+                "popular": false
+            },
+            {
+                "id": "2416264-m5",
+                "name": "Iced Caramel Macchiato",
+                "price": 8.0,
+                "category": "Drinks",
+                "popular": true
+            },
+            {
+                "id": "2416264-m6",
+                "name": "Matcha Latte",
+                "price": 8.5,
+                "category": "Drinks",
+                "popular": true
+            },
+            {
+                "id": "2416264-m7",
+                "name": "Peach Lemon Tea",
+                "price": 6.5,
+                "category": "Drinks",
+                "popular": false
+            },
+            {
+                "id": "2416264-m8",
+                "name": "Butter Croissant",
+                "price": 4.5,
+                "category": "Pastries",
+                "popular": false
+            },
+            {
+                "id": "2416264-m9",
+                "name": "Garlic Cream Cheese Bun",
+                "price": 5.5,
+                "category": "Pastries",
+                "popular": true
+            }
+        ]
+    }
+]
