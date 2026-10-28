@@ -22,7 +22,7 @@ function App() {
   const [lastOrder, setLastOrder] = useState(null)
 
   //personal feature: spice level badge and filter
-  const [maxSpice, setMaxSpice] = useState(3)
+  const [maxSpice, setMaxSpice] = useState(0)
 
   //fetch vendors data from the API endpoint
   useEffect(() => {
