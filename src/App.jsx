@@ -7,10 +7,6 @@ import Footer from './components/Footer.jsx'
 import { Loading, ErrorMessage } from './components/Status.jsx'
 
 function App() {
-  const [vendors, setVendors] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [reloadKey, setReloadKey] = useState(0)
 
   const [selectedVendorId, setSelectedVendorId] = useState(null)
   const [cart, setCart] = useState([])
@@ -23,37 +19,6 @@ function App() {
 
   //personal feature: spice level badge and filter
   const [maxSpice, setMaxSpice] = useState(0)
-
-  //fetch vendors data from the API endpoint
-  useEffect(() => {
-    const controller = new AbortController()
-    setLoading(true)
-    setError(null)
-    
-    fetch('/api/vendors.json', { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Server returned status ${res.status}`)
-        }
-        return res.json()
-      })
-      .then((data) => {
-        setVendors(data)
-        if (data.length > 0) {
-          //select first vendor by default if available
-          setSelectedVendorId(data[0].id)
-        }
-        setLoading(false)
-      })
-      .catch((err) => {
-        if (err.name !== 'AbortError') {
-          setError(err.message)
-          setLoading(false)
-        }
-      })
-
-      return () => controller.abort()
-    }, [reloadKey])
 
     //cart management function
     function handleAddToCart(item) {
