@@ -1,13 +1,13 @@
+import { useCart } from '.../hooks/useCart.js'
 import CartItem from './CartItem.jsx'
 import CheckoutForm from './CheckoutForm.jsx'
  
-function CartPage({ cart, onChangeQty, onRemove, onPlaceOrder }) {
+function CartPage() {
+  const { cart, changeQty, removeFromCart, placeOrder, total } = useCart()
   if (cart.length === 0) {
     return <p className="muted">Your cart is empty. Pick something from a menu 
 first.</p>
   }
- 
-  const total = cart.reduce((sum, line) => sum + line.item.price * line.qty, 0)
  
   return (
     <div className="cart-layout">
