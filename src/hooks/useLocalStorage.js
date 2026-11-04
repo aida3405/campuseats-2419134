@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 // Step 1: a custom hook. Same shape as useState, but the value survives a page refresh.
 export function useLocalStorage(key, initialValue) {
   const [value, setValue] = useState(() => {

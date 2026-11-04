@@ -12,7 +12,7 @@ function validate(values) {
   if (!values.mahallah) {
     errors.mahallah = 'Please select your mahallah.'
   }
-  if (!values.pickupTime || values.pickupTime < '7:00' || values.pickupTime > '22:00') {
+  if (!values.pickupTime || values.pickupTime < '07:00' || values.pickupTime > '22:00') {
     errors.pickupTime = 'Pickup time must be between 07:00 and 22:00.'
   }
   return errors

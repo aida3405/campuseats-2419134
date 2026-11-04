@@ -99,3 +99,12 @@ button.card:hover { border-color: var(--green-light); }
 .form .btn { margin-top: 1rem; }
 .field-error { color: #b3261e; font-size: 0.85rem; margin: 0; }
 .error { border-left: 4px solid #b3261e; }
+
+/* Week 4 additions */
+.nav a.active { text-decoration: underline; text-underline-offset: 6px; }
+.logo-link { color: #fff; text-decoration: none; }
+a.card { text-decoration: none; color: inherit; border: 2px solid transparent; }
+a.card:hover { border-color: var(--green-light); }
+.container a { color: var(--green); }
+.order-list { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
+.container a.card { color: inherit; }

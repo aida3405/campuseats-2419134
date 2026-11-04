@@ -7,41 +7,41 @@ export function CartProvider ({children}) {
     const [orders, setOrders] = useLocalStorage('campuseats-orders', [])
 
     //total item count
-    const count = cart.reduce((sum, item) => sum + item.qty, 0)
+    const count = cart.reduce((sum, line) => sum + line.qty, 0)
 
     //total price
-    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
+    const total = cart.reduce((sum, line) => sum + line.item.price * line.qty, 0)
 
     //add item or increment quantity if already exist
     const addToCart = (product) => {
       setCart((prevCart) => {
-        const existingIndex = prevCart.findIndex((item) => item.id == product.id)
-        if (existingIndex) {
-          return prevCart.map((item) =>
-            item.id === product.id ? { ...item, qty: item.qty + 1 } : item)
+        const existingIndex = prevCart.findIndex((line) => line.item.id == product.id)
+        if (existingIndex !== -1) {
+          return prevCart.map((line, index) =>
+            index === existingIndex ? { ...line, qty: line.qty + 1 } : line)
         }
-        return [...prevCart, {...product, qty: 1}]
+        return [...prevCart, { item: product, qty: 1 }]
       }) // new item is added to the cart array
     }
 
     //change quantity of specific item
-    const changeQty = (id, delta) => {
+    const changeQty = (itemId, delta) => {
         setCart((prevCart) => {
         return prevCart
-          .map((item) => {
-            if (item.id === id) {
-              const newQty = item.qty + delta
-              return newQty > 0 ? { ...item, qty: newQty } : null
+          .map((line) => {
+            if (line.item.id === itemId) {
+              const newQty = line.qty + delta
+              return newQty > 0 ? { ...line, qty: newQty } : null
             }
-            return item
+            return line
           })
           .filter(Boolean) //remove items with qty <= 0
       })
     }
 
     //remove item completely from cart
-    const removeFromCart = (id) => {
-        setCart((prevCart) => prevCart.filter((item) => item.id !== id))
+    const removeFromCart = (itemId) => {
+        setCart((prevCart) => prevCart.filter((line) => line.item.id !== itemId))
     }
 
     //move cart items to orders and clears the cart
@@ -61,13 +61,13 @@ export function CartProvider ({children}) {
       <CartContext.Provider
       value = {{
         cart,
-          orders,
-          count,
-          total,
-          addToCart,
-          changeQty,
-          removeFromCart,
-          placeOrder,
+        orders,
+        count,
+        total,
+        addToCart,
+        changeQty,
+        removeFromCart,
+        placeOrder,
       }}>
         { children }
       </CartContext.Provider>

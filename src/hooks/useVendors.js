@@ -26,10 +26,6 @@ export function useVendors() {
       })
       .then((data) => {
         setVendors(data)
-        if (data.length > 0) {
-          //select first vendor by default if available
-          setSelectedVendorId(data[0].id)
-        }
         setLoading(false)
       })
       .catch((err) => {
