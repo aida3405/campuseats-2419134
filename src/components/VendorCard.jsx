@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 
 function VendorCard({ vendor }) {
   return (
-    <Link to={`/vendor/${vendor.id}`}>
+    <Link to={`/vendor/${vendor.id}`} className="card vendor-card">
       <div className="thumb" aria-hidden="true">{vendor.name.charAt(0)}</div>
       <div>
         <h3>{vendor.name}</h3>

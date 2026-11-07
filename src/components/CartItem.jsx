@@ -4,14 +4,14 @@ function CartItem({ line, onChangeQty, onRemove }) {
   return (
     <li className="cart-line">
       <div>
-        <p className="cart-name">{item.name}</p>
+        <p className="cart-name" font-weight>{item.name}</p>
         <p className="muted">RM {item.price.toFixed(2)} each</p>
       </div>
 
       <div className="qty">
         <button type="button" onClick={() => onChangeQty(item.id, -1)}>−</button>
         <span>{qty}</span>
-        <button type="button" onClick={() => { onChangeQty(item.d, 1) }}>+</button>
+        <button type="button" onClick={() => onChangeQty(item.id, 1)}>+</button>
       </div>
 
       <p className="line-total">RM {(item.price * qty).toFixed(2)}</p>

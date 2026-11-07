@@ -27,7 +27,7 @@ export default function VendorPage() {
     }
 
     const filteredMenu = vendor.menu.filter((item) => {
-        const spice = item.spiceLevel !== undefined ? item.spiceLevel : 0
+        const spice = item.spiceLevel !== undefined ? Number(item.spiceLevel) : 0
         return spice <= maxSpice
     })
 

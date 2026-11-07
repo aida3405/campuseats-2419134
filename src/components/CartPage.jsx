@@ -18,6 +18,8 @@ function CartPage() {
   }
  
   return (
+    <div>
+      <h2 className="section-title">Your Cart</h2>
     <div className="cart-layout">
       <div className="card">
         <ul className="cart-list">
@@ -29,6 +31,7 @@ function CartPage() {
         <p className="cart-total">Total: RM {total.toFixed(2)}</p>
       </div>
       <CheckoutForm onPlaceOrder={handlePlaceOrder} />
+    </div>
     </div>
   )
 }

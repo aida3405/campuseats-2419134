@@ -6,6 +6,7 @@ import VendorPage from './pages/VendorPage.jsx'
 import CartPage from './components/CartPage.jsx'
 import OrdersPage from './pages/OrdersPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+import './index.css'
 
 function App() {
   return (

@@ -15,7 +15,7 @@ export function CartProvider ({children}) {
     //add item or increment quantity if already exist
     const addToCart = (product) => {
       setCart((prevCart) => {
-        const existingIndex = prevCart.findIndex((line) => line.item.id == product.id)
+        const existingIndex = prevCart.findIndex((line) => line.item.id === product.id)
         if (existingIndex !== -1) {
           return prevCart.map((line, index) =>
             index === existingIndex ? { ...line, qty: line.qty + 1 } : line)
