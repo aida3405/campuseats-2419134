@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth.js'
 import { authErrorMessage } from '../authErrors.js'
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { auth } from '../firebase.js'
 
 function LoginPage() {
     const { login, loginWithGoogle } = useAuth()
@@ -12,11 +14,13 @@ function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [message, setMessage] = useState('')
     const [busy, setBusy] = useState(false)
  
     async function handleSubmit(event) {
         event.preventDefault()
         setError('')
+        setMessage('')
         setBusy(true)
         try {
             // TODO 3: await login(email, password), then navigate(goTo, { replace: true })
@@ -39,6 +43,24 @@ function LoginPage() {
             setError(authErrorMessage(err))
         }
     }
+
+    async function handleForgotPassword(event) {
+        event.preventDefault()
+        setError('')
+        setMessage('')
+
+        if (!email.trim()) {
+            setError('Enter your email address to reset your password.')
+            return
+        }
+
+        try {
+            await sendPasswordResetEmail(auth, email.trim())
+            setMessage('Password reset email sent. Check your inbox.')
+        } catch (err) {
+            setError(authErrorMessage(err))
+        }
+    }
   
     return (
         <section className="auth-page">
@@ -51,14 +73,21 @@ function LoginPage() {
                 <input id="password" type="password" value={password}
                     onChange={(e) => setPassword(e.target.value)} required />
                 {error && <p className="field-error" role="alert">{error}</p>}
+
+                {message && <p className="field-message" role="alert">{message}</p>}
+                <div style={{ margin: '0.5rem 0', textAlign: 'right' }}>
+                    <button type="button" className="btn-link" onClick={handleForgotPassword} 
+                    style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', padding: 0, textDecoration: 'underline' }}>
+                        Forgot password?</button>
+                        </div>
+
                 <button type="submit" className="btn" disabled={busy}>
                     {busy ? 'Logging in…' : 'Log in'}
                 </button>
                 <button type="button" className="btn btn-outline" onClick={handleGoogle}>
                 Continue with Google
                 </button>
-                <p className="muted">No account? <Link to="/register"
-    state={location.state}>Register</Link></p>
+                <p className="muted">No account? <Link to="/register" state={location.state}>Register</Link></p>
             </form>
         </section>
     )
