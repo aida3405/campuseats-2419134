@@ -1,7 +1,19 @@
-import { useCart } from '../hooks/useCart.js'
+import { useMyOrders } from '../hooks/useMyOrders.js'
+import { Loading, ErrorMessage } from '../components/Status.jsx'
+import OrderStatus from '../components/OrderStatus.jsx'
 
 export default function OrdersPage() {
-    const { orders } = useCart()
+    const { orders, loading, error } = useMyOrders()
+
+    if (loading) return <Loading />
+    if (error) {
+        return (
+            <ErrorMessage
+            message={error}
+            onRetry={() => window.location.reload()}
+            />
+        )
+    }
 
     if (orders.length === 0) {
         return <p className="muted">
@@ -11,28 +23,18 @@ export default function OrdersPage() {
 
     return (
         <div>
-            <h2>Your Past Orders</h2>
-            {orders.map((order) => (
-                <div key={order.id} className="card" style={{ marginBottom: '1rem' }}>
-                    <p><strong>Order ID:</strong> {order.id}</p>
-                    <p><strong>Date:</strong> {new Date(order.date).toLocaleString()}</p>
-                    <p><strong>Name:</strong> {order.name}</p>
-                    <p><strong>Pickup Time:</strong> {order.pickupTime}</p>
-                    <p><strong>Mahallah:</strong> {order.mahallah}</p>
-                    <p><strong>Total Paid:</strong> RM {order.total.toFixed(2)}</p>
-
-                    <div>
-                        <h4>Items Ordered:</h4>
-                        <ul>
-                            {order.items.map((line, index) => (
-                                <li key={index}>
-                                    {line.item.name} - Quantity: {line.qty}, Price: RM {(line.item.price * line.qty).toFixed(2)}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+            <h2>Your Orders</h2>
+            <ul className="order-list">
+                {orders.map((order) => (
+                    <li key={order.id} className="card">
+                    <p className="cart-name">{order.vendorName} · pickup {order.pickupTime}</p>
+                    <p className="muted">{order.items.map((i) => `${i.qty}× ${i.name}`).join(',')}</p>
+                    <p className="muted">Placed {order.createdAt ? order.createdAt.toDate().toLocaleString('en-MY') : 'just now'}</p>
+                    <p className="price">RM {order.total.toFixed(2)}</p>
+                    <OrderStatus status={order.status} />
+                </li>
             ))}
+            </ul>
         </div>
     )
 }

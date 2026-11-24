@@ -4,7 +4,6 @@ import { CartContext } from './cart-context.js'
 export function CartProvider ({children}) {
     //cart n orders survive refresh using useLocalStorage
     const [cart, setCart] = useLocalStorage('campuseats-cart', [])
-    const [orders, setOrders] = useLocalStorage('campuseats-orders', [])
 
     //total item count
     const count = cart.reduce((sum, line) => sum + line.qty, 0)
@@ -44,30 +43,20 @@ export function CartProvider ({children}) {
         setCart((prevCart) => prevCart.filter((line) => line.item.id !== itemId))
     }
 
-    //move cart items to orders and clears the cart
-    const placeOrder = (customerDetails) => {
-        const newOrder = {
-            id: Date.now(),
-            date: new Date().toISOString(),
-            items: [...cart],
-            total,
-            ...customerDetails,
-        }
-        setOrders((prevOrders) => [newOrder, ...prevOrders])
-        setCart([]) //clear cart
+    const clearCart = () => {
+      setCart([])
     }
 
     return (
       <CartContext.Provider
       value = {{
         cart,
-        orders,
         count,
         total,
         addToCart,
         changeQty,
         removeFromCart,
-        placeOrder,
+        clearCart,
       }}>
         { children }
       </CartContext.Provider>
