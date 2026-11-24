@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import './index.css'
+import SeedPage from './pages/SeedPage.jsx'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="/vendor/:id" element={<VendorPage />} />
         <Route path="/login" element={<LoginPage />} />
+        {import.meta.env.DEV && <Route path="seed" element={<SeedPage />} />}
         <Route path="/register" element={<RegisterPage />} />
         {/* Everything inside ProtectedRoute needs a signed-in user */}
         <Route element={<ProtectedRoute />}>
