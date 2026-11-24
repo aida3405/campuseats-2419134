@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect} from 'react'
+import { subscribeToVendors } from '../services/vendors.js'
 
 export function useVendors() {
   const [vendors, setVendors] = useState([])
@@ -6,37 +7,17 @@ export function useVendors() {
   const [error, setError] = useState(null)
   const [reloadKey, setReloadKey] = useState(0)
 
-  //function trigger reload/retry
-  const reload = useCallback(() => {
-    setReloadKey((k) => k + 1)
-  }, [])
-
   //fetch vendors data from the API endpoint
+  //use subscribeToVendors
   useEffect(() => {
-    const controller = new AbortController()
     setLoading(true)
     setError(null)
-    
-    fetch('/api/vendors.json', { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Server returned status ${res.status}`)
-        }
-        return res.json()
-      })
-      .then((data) => {
-        setVendors(data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        if (err.name !== 'AbortError') {
-          setError(err.message)
-          setLoading(false)
-        }
-      })
-
-      return () => controller.abort()
+    const unsubscribe = subscribeToVendors(
+      (data) => { setVendors(data); setLoading(false) },
+      (err) => { setError(err.message); setLoading(false) },
+    )
+    return unsubscribe //stop listen when component unmounts
     }, [reloadKey])
 
-    return { vendors, loading, error, reload }
+    return { vendors, loading, error, reload: () => setReloadKey((k) => k+1) }
 }
