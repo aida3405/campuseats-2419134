@@ -52,5 +52,5 @@ export function changePickupTime(orderId, pickupTime) {
 
 //delete: remove whole doc
 export function cancelOrder(orderId) {
-    return deleteDoc(doc(db, 'orders', orderId), { changePickupTime })
+    return deleteDoc(doc(db, 'orders', orderId)) //as changePickupTime
 }
