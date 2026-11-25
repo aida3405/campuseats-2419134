@@ -10,12 +10,12 @@ export function useMyOrders() {
 
     useEffect(() => {
         if (!user) return
-        const unsubsribe = subscribeToMyOrders(
+        const unsubscribe = subscribeToMyOrders(
             user.uid,
             (data) => { setOrders(data); setLoading(false) },
             (err) => { setError(err.message); setLoading(false) },
         )
-        return unsubsribe
+        return unsubscribe
     }, [user])
 
     return { orders, loading, error}
