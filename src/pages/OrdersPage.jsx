@@ -1,6 +1,7 @@
 import { useMyOrders } from '../hooks/useMyOrders.js'
 import { Loading, ErrorMessage } from '../components/Status.jsx'
 import OrderStatus from '../components/OrderStatus.jsx'
+import OrderActions from '../components/OrderActions.jsx'
 
 export default function OrdersPage() {
     const { orders, loading, error } = useMyOrders()
@@ -32,6 +33,7 @@ export default function OrdersPage() {
                     <p className="muted">Placed {order.createdAt ? order.createdAt.toDate().toLocaleString('en-MY') : 'just now'}</p>
                     <p className="price">RM {order.total.toFixed(2)}</p>
                     <OrderStatus status={order.status} />
+                    {order.status === 'Received' && <OrderActions order={order} /> }
                 </li>
             ))}
             </ul>

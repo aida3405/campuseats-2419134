@@ -1,4 +1,4 @@
-import { collection, doc, onSnapshot, query, where, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { collection, doc, onSnapshot, query, where, serverTimestamp, writeBatch, updateDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.js'
 
 //one order per vendor in the cart, all in single batch
@@ -43,4 +43,14 @@ export function subscribeToMyOrders(uid, onData, onError) {
         },
         onError,
     )
+}
+
+//change one field, other field of order stay as they are
+export function changePickupTime(orderId, pickupTime) {
+    return updateDoc(doc(db, 'orders', orderId), { pickupTime})
+}
+
+//delete: remove whole doc
+export function cancelOrder(orderId) {
+    return deleteDoc(doc(db, 'orders', orderId), { changePickupTime })
 }
