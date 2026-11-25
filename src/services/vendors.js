@@ -1,4 +1,4 @@
-import { collection, doc, onSnapshot, writeBatch } from 'firebase/firestore'
+import { collection, doc, onSnapshot, query, where, writeBatch } from 'firebase/firestore'
 import { db } from '../firebase.js'
 
 //all subscribe function returns unsubsribe function for useEffect cleanup
@@ -19,12 +19,14 @@ export function subscribeToVendor(vendorId, onData, onError) {
 }
 
 //menus are subcollection: vendors/{vendorId}/menu/{itemId}
-export function subscribeToMenu(vendorId,onData, onError) {
+export function subscribeToMenu(vendorId, maxSpice, onData, onError) {
+    const menuRef = collection(db, 'vendors', vendorId, 'menu')
+    const q = query(menuRef, where('spiceLevel', '<=', Number(maxSpice ?? 3)))
+
     // TODO 1: copy subscribeToVendors, but listen to collection(db, 'vendors', vendorId, 'menu')
     // Hint: map each doc to ({ id: d.id, vendorId, ...d.data() }) so the cart knows the vendor.
     return onSnapshot(
-        collection(db, 'vendors', vendorId, 'menu'),
-        (snapshot) => onData(snapshot.docs.map((d) => ({ id: d.id, vendorId, ...d.data() }))),
+        q, (snapshot) => onData(snapshot.docs.map((d) => ({ id: d.id, vendorId, ...d.data() }))),
         onError,
     )
 }

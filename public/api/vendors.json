@@ -13,7 +13,6 @@
                 "price": 2.5,
                 "category": "Rice", 
                 "spiceLevel": 2, 
-                "popular": true, 
                 "available": true 
             },
             { 
@@ -23,7 +22,6 @@
                 "price": 6,
                 "category": "Rice", 
                 "spiceLevel": 2, 
-                "popular": false, 
                 "available": false 
             },
             { 
@@ -33,7 +31,6 @@
                 "price": 3.5, 
                 "category": "Rice", 
                 "spiceLevel": 1, 
-                "popular": false, 
                 "available": true 
             },
             { 
@@ -43,7 +40,6 @@
                 "price": 4, 
                 "category": "Noodles", 
                 "spiceLevel": 2, 
-                "popular": false, 
                 "available": true 
             },
             { 
@@ -53,7 +49,6 @@
                 "price": 3.5, 
                 "category": "Noodles", 
                 "spiceLevel": 1, 
-                "popular": false, 
                 "available": false 
             },
             { 
@@ -63,7 +58,6 @@
                 "price": 2.5,
                 "category": "Drinks", 
                 "spiceLevel": 0, 
-                "popular":true, 
                 "available": true 
             },
             { 
@@ -73,7 +67,6 @@
                 "price": 2,
                 "category": "Drinks", 
                 "spiceLevel": 0, 
-                "popular": false, 
                 "available": true 
             },
             { 
@@ -83,7 +76,6 @@
                 "price": 2.5,
                 "category": "Drinks", 
                 "spiceLevel": 0, 
-                "popular": false, 
                 "available": false 
             }
         ]
@@ -101,6 +93,7 @@
                 "description": "Smooth Japanese matcha with creamy milk.",
                 "price": 8.0,
                 "category": "Drinks",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -109,6 +102,7 @@
                 "description": "Sweet strawberry layered with earthy matcha.",
                 "price": 10.5,
                 "category": "Drinks",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -117,6 +111,7 @@
                 "description": "Espresso with silky, sweetened milk.",
                 "price": 8.0,
                 "category": "Drinks",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -125,6 +120,7 @@
                 "description": "Rich chocolate blended with creamy milk",
                 "price": 7.0,
                 "category": "Drinks",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -133,6 +129,7 @@
                 "description": "Light, fruity and refreshing.",
                 "price": 4.0,
                 "category": "Drinks",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -141,6 +138,7 @@
                 "description": "Grilled chicken, rice and savoury teriyaki sauce.",
                 "price": 10.5,
                 "category": "Cafe Mains",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -149,6 +147,7 @@
                 "description": "Crispy chicken patty served on a toasted bun with lettuce and tomato.",
                 "price": 10.0,
                 "category": "Cafe Mains",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -157,6 +156,7 @@
                 "description": "A traditional Italian dish with garlic, olive oil and chicken.",
                 "price": 11.0,
                 "category": "Cafe Mains",
+                "spiceLevel" : 0,
                 "available": false
             },
             {
@@ -165,6 +165,7 @@
                 "description": "Creamy sauce, tender chicken and herbs.",
                 "price": 12.0,
                 "category": "Cafe Mains",
+                "spiceLevel" : 0,
                 "available": false
             },
             {
@@ -173,6 +174,7 @@
                 "description": "Flaky, buttery and freshly baked style.",
                 "price": 4.5,
                 "category": "Sweet Treats",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -181,6 +183,7 @@
                 "description": "Buttery cookies with a gentle matcha flavour.",
                 "price": 5.0,
                 "category": "Sweet Treats",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -189,6 +192,7 @@
                 "description": "Creamy cheesecake with a caramelised top.",
                 "price": 6.0,
                 "category": "Sweet Treats",
+                "spiceLevel" : 0,
                 "available": true
             },
             {
@@ -197,6 +201,7 @@
                 "description": "Creamy layered dessert with a matcha finish.",
                 "price": 10.0,
                 "category": "Sweet Treats",
+                "spiceLevel" : 0,
                 "available": true
             }
         ]
@@ -211,65 +216,83 @@
             {
                 "id": "2416264-m1",
                 "name": "Chocolate Cake",
+                "description": "Moist chocolate sponge layered with chocolate ganache.",
                 "price": 6.0,
                 "category": "Desserts",
-                "popular": true
+                "spiceLevel" : 0,
+                "available": true
             },
             {
                 "id": "2416264-m2",
                 "name": "Burnt Cheesecake",
+                "description": "Creamy Basque-style cheesecake with caramelized top and soft center.",
                 "price": 7.0,
                 "category": "Desserts",
-                "popular": true
+                "spiceLevel" : 0,
+                "available": true
             },
             {
                 "id": "2416264-m3",
                 "name": "Red Velvet Slice",
+                "description": "SOft cocoa-infused red velvet cake topped with smooth cream cheese frosting.",
                 "price": 6.5,
                 "category": "Desserts",
-                "popular": false
+                "spiceLevel" : 0,
+                "available": false
             },
             {
                 "id": "2416264-m4",
                 "name": "Fruit Tartlet",
+                "description": "Crisp butter pastry filled with vanilla custard and fresh seasonal fruits.",
                 "price": 5.0,
                 "category": "Desserts",
-                "popular": false
+                "spiceLevel" : 0,
+                "available": true
             },
             {
                 "id": "2416264-m5",
                 "name": "Iced Caramel Macchiato",
+                "description": "Chilled fresh milk layered with espresso and drizzled with sweet caramel sauce.",
                 "price": 8.0,
                 "category": "Drinks",
-                "popular": true
+                "spiceLevel" : 0,
+                "available": true
             },
             {
                 "id": "2416264-m6",
                 "name": "Matcha Latte",
+                "description": "Earthy Japanese green tea whisked with creamy steamed or iced milk.",
                 "price": 8.5,
                 "category": "Drinks",
-                "popular": true
+                "spiceLevel" : 0,
+                "available": true
             },
             {
                 "id": "2416264-m7",
                 "name": "Peach Lemon Tea",
+                "description": "Refreshing iced black tea infused with sweet peach and zesty lemon.",
                 "price": 6.5,
                 "category": "Drinks",
-                "popular": false
+                "spiceLevel" : 0,
+                "available": true
             },
             {
                 "id": "2416264-m8",
                 "name": "Butter Croissant",
+                "description": "Flaky, golden-baked French pastry made with rich layers of butter.",
                 "price": 4.5,
                 "category": "Pastries",
-                "popular": false
+                "spiceLevel" : 0,
+                "available": true
             },
             {
                 "id": "2416264-m9",
                 "name": "Garlic Cream Cheese Bun",
+                "description": "Soft brioche bun filled with tangy cream cheese and baked in savory garlic butter.",
                 "price": 5.5,
                 "category": "Pastries",
-                "popular": true
+                "spiceLevel" : 0,
+                "available": true
             }
         ]
     }

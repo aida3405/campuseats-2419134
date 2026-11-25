@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router'
 import { useVendor } from '../hooks/useVendor.js'
 import MenuList from '../components/MenuList.jsx'
@@ -5,15 +6,36 @@ import { Loading, ErrorMessage } from '../components/Status.jsx'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
 import { useAuth } from '../hooks/useAuth.js'
 
+function SavedSpiceSlider({ uid, maxSpice, onChangeMaxSpice }) {
+    const [savedSpice, setSavedSpice] = useLocalStorage(`ce-spice-${uid}`, maxSpice)
+
+    useEffect(() => {
+        onChangeMaxSpice(Number(savedSpice ?? 3))
+    }, [savedSpice, onChangeMaxSpice])
+
+    function handleChange(e) {
+        const next = Number(e.target.value)
+        setSavedSpice(next)
+        onChangeMaxSpice(next)
+    }
+
+    return (
+        <input type="range" id="spiceRange" min="0" max="3" value={maxSpice} onChange={handleChange} 
+        style={{ display: 'block', width: '100%', maxWidth: '300px', marginTop: '0.5rem' }}/>
+    )
+}
+
 export default function VendorPage() {
     const { id } = useParams()
-    const { vendor, menu, loading, error } = useVendor(id)
+    const { user } = useAuth()
     //const [maxSpice, setMaxSpice] = useLocalStorage('campuseats-max-spice', 3)
-    const { user, loading: authLoading } = useAuth()
     //login in
-    const spiceKey = user ? `ce-spice-${user.uid}` : null
+    const [userMaxSpice, setUserMaxSpice] = useState(3)
     //initial state set 3
-    const [maxSpice, setMaxSpice] = useLocalStorage(spiceKey, 3) 
+    const [guestMaxSpice, setGuestMaxSpice] = useState(3)
+    
+    const activeMaxSpice = user ? userMaxSpice : guestMaxSpice
+    const { vendor, menu, loading, error } = useVendor(id, activeMaxSpice)
 
     if (loading) return <Loading />
     if (error) {
@@ -36,11 +58,6 @@ export default function VendorPage() {
         vendorName: vendor.name,
     }))
 
-    const filteredMenu = itemsWithVendor.filter((item) => {
-        const spice = item.spiceLevel !== undefined ? Number(item.spiceLevel) : 0
-        return spice <= maxSpice
-    })
-
     return (
         <div key={id}>
             <Link to="/" style={{ display: 'inline-block', marginBottom: '1rem'}}>
@@ -49,19 +66,27 @@ export default function VendorPage() {
 
             <div className="filter-container" style={{ margin: '1rem 0' }}>
                 <label htmlFor="spiceRange">
-                    Max Spice Level: <strong>{maxSpice}</strong>
+                    Max Spice Level: <strong>{activeMaxSpice}</strong>
                 </label>
+                {user ? (
+                    <SavedSpiceSlider
+                        uid={user.uid}
+                        maxSpice={activeMaxSpice}
+                        onChangeMaxSpice={setUserMaxSpice}
+                        />
+                ) : (
                 <input
                 type = "range"
                 id = "spiceRange"
                 min = "0"
                 max = "3"
-                value = {maxSpice}
-                onChange = {(e) => setMaxSpice(Number(e.target.value))}
+                value = {guestMaxSpice}
+                onChange = {(e) => setGuestMaxSpice(Number(e.target.value))}
                 style={{ display: 'block', width: '100%', maxWidth: '300px', marginTop: '0.5rem' }}
                 />
+                )}
             </div>
-            <MenuList items={filteredMenu} />
+            <MenuList items={itemsWithVendor} />
         </div>
     )
 }
