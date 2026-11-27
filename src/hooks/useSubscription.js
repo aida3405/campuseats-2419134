@@ -14,7 +14,7 @@ export function useSubscription(subscribe, deps, initial = null) {
             (value) => { setData(value); setLoading(false) },
             (err) => { setError(err.message); setLoading(false) },
         )
-        return unsubsribe
+        return unsubscribe
     }, deps)
 
     return { data, loading, error }

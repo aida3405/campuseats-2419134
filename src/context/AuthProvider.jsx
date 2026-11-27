@@ -36,8 +36,6 @@ export function AuthProvider({ children }) {
         await updateProfile(credential.user, { displayName: name })
         await ensureUserProfile(credential.user, name)
 
-        const role = profile?.role ?? null
-        const value = { user, profile, role, loading, register, login, loginWithGoogle, logout }
         setUser({ ...credential.user, displayName: name }) // show the name at once
     }
  
@@ -55,7 +53,8 @@ export function AuthProvider({ children }) {
         // TODO 2: return signOut(...) Hint: it only needs auth.
         return signOut(auth)
     }
- 
-    const value = { user, loading, register, login, loginWithGoogle, logout }
+
+    const role = profile?.role ?? null
+    const value = { user, profile, role, loading, register, login, loginWithGoogle, logout }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
