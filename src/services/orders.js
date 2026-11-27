@@ -1,6 +1,8 @@
 import { collection, doc, onSnapshot, query, where, serverTimestamp, writeBatch, updateDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.js'
 
+export const STATUSES = ['Received', 'Preparing', 'Ready', 'Collected']
+
 //one order per vendor in the cart, all in single batch
 export async function placeOrders(user, cart, details) {
     const byVendor = new Map()
@@ -22,6 +24,7 @@ export async function placeOrders(user, cart, details) {
             total: lines.reduce((sum, { item, qty }) => sum + item.price*qty, 0),
             status: 'Received',
             createdAt: serverTimestamp(),
+            vendorOwnerUid: lines[0].item.vendorOwnerUid ?? null,
         })
     }
     await batch.commit()
@@ -44,6 +47,13 @@ export function subscribeToMyOrders(uid, onData, onError) {
         onError,
     )
 }
+
+export function subscribeToVendorOrders(ownerUid, onData, onError) {
+    const q = query(collection(db, 'orders'), where('vendorOwnerUid', '==', ownerUid))
+    return onSnapshot(q, (s) => onData(s.docs.map((d) => ({ id: d.id, ...d.data() }))), onError)
+}
+
+export const updateOrderStatus = (orderId, status) => updateDoc(doc(db, 'orders', orderId), { status }) 
 
 //change one field, other field of order stay as they are
 export function changePickupTime(orderId, pickupTime) {

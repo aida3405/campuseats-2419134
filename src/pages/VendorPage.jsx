@@ -56,6 +56,7 @@ export default function VendorPage() {
     const itemsWithVendor = menu.map((item) => ({
         ...item,
         vendorName: vendor.name,
+        vendorOwnerUid: vendor.ownerUid ?? null
     }))
 
     return (
