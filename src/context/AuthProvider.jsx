@@ -6,22 +6,38 @@ import {
 } from 'firebase/auth'
 import { auth } from '../firebase.js'
 import { AuthContext } from './auth-context.js'
+import { ensureUserProfile, subscribeToProfile } from '../services/users.js'
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true) // true until Firebase answers
+    const [profile, setProfile] = useState(null)
     // Listen, don't ask: runs once on load and on every sign-in / sign-out.
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+        let stopProfile = () => {}
+        const stopAuth = onAuthStateChanged(auth, async (firebaseUser) => {
+            stopProfile()
             setUser(firebaseUser)
-            setLoading(false)
+            if (!firebaseUser) { setProfile(null); setLoading(false); return }
+            setLoading(true) // wait for role bfr show role-based pages
+            try { await ensureUserProfile(firebaseUser) } catch (err)
+            { console.error(err) }
+            stopProfile = subscribeToProfile(
+                firebaseUser.uid,
+                (p) => { setProfile(p); setLoading(false) },
+                () => setLoading(false),
+            )
         })
-    return unsubscribe // cleanup: stop listening
+    return () => { stopAuth(); stopProfile() } // 2 listeners, 2 cleanups
     }, [])
  
     async function register(name, email, password) {
         const credential = await createUserWithEmailAndPassword(auth, email, password)
         await updateProfile(credential.user, { displayName: name })
+        await ensureUserProfile(credential.user, name)
+
+        const role = profile?.role ?? null
+        const value = { user, profile, role, loading, register, login, loginWithGoogle, logout }
         setUser({ ...credential.user, displayName: name }) // show the name at once
     }
  

@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth.js'
 
 function Header() {
   const { count } = useCart()
-  const { user, logout } = useAuth()
+  const { user, role, logout } = useAuth()
   const navigate = useNavigate()
 
   async function handleLogout() {
@@ -16,6 +16,9 @@ function Header() {
   <header className="header">
     <h1 className="logo">CampusEats</h1>
     <nav className="nav">
+      { role === 'vendor' && <NavLink to="/dashboard">Dashboard</NavLink>}
+      { role === 'admin' && <NavLink to="/admin">Admin</NavLink>}
+      { role === 'student' && <NavLink to="/become-vendor">Sell food</NavLink>}
       <NavLink to="/" end>Vendors</NavLink>
       <NavLink to="/orders">My Orders</NavLink>
       <NavLink to="/cart">
