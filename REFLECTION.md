@@ -32,3 +32,20 @@ Answer each question in 1–3 sentences, in your own words.
     - What happened: While wiring up 4-argument 'subscribeToMenu(vendorId, maxSpice, onData, onError)' with 'useVendor(id, activeMaxSpice)' and 'VendorPage.jsx', I hit 'TypeError: onData is not function', a 'ReferenceError: filteredMenu is not defined' and 'ReferenceError: query is not defined'
     - The cause: leaving old 3-argument 'subscribeToMenu' in 'vendors.js', forget to import 'query' and 'where' from 'firebase/firestore' and still pass removed local 'filteredMenu' variable in 'VendorPage'
     - Fixed: update 'subscribeToMenu' to accept 'maxSpice' and run 'query(...,where('spiceLevel', '<=',...))', import query and 'where' in 'vendors.js' and pass 'itemsWithVendor' from live Firestore subscription into 'MenuList'
+
+# Week 7 reflection
+1.  Copy one rule from your firestore.rules (the order or the menu rule) and explain it line by line: who is allowed, and which condition stops everyone else.
+    - allow update: if signedIn()
+        && resource.data.vendorOwnerUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+    - this firestore.rules is under 'match /orders/{orderId}', which is for vendor status update rule
+    - Firstly, 'signedIn()' checks 'request.auth != null' and blocking unauthenticated requests immediately. The, 'resource.data.vendorOwnerUid == request.auth.uid' will ensure only the authenticated user who owns the vendor shop for that order can update it, stopping students or other stall owners. Finally, 'request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])' restricts the write so that only the 'status' field is modified. Firestore will denies the write if the vendor or someone else tries to alter 'total', 'studentUid', 'items', or 'pickupTime' in the same update.
+
+2.  For users, vendors, menu and orders: who can read and who can write each one, according to your rules?
+    - 'users/{uid}' > only matching user ('request.auth.uid == uid') or 'admin' can read or update the profile. This means, non-admins cannot change their 'role' field. Also, users can create their own initial 'student' profile, and only 'admin' can delete user documents.
+    - 'vendors/{vendorId}' > anyone, including visitors can read approved shops ('approved == true'). Owners and admins can read approved and unapproved ones. Authenticated users can create vendor application only with 'approved: false' and their own 'ownerUid'. Shop owners can update non-protected fields their own shop. Only admin can approve shops or delete vendors.
+    - 'vendors/{vendorId}/menu/{itemId}' > anyone can read menu items as long as browse stays open. But only admins or shop's 'ownerUid' can write (create, update, delete) menu items.
+    - 'orders/{orderId}' > only order's 'studentUid', the order's 'vendorOwnerUid' or 'admin' can read order. Signed in student can create order for themselves with 'status == 'Received' and matching 'vendorOwnerUid'. Vendors can update only 'status' while students can only update 'pickupTime' or delete the order while its status is 'Received'.
+
+3. Why is hiding the vendor buttons in React not enough to stop a student changing a menu price? What actually stops it?
+    - Hiding dashboard links or 'Add item'/'Delete' buttons in React ('RoleRoute' or conditional rendering) only controls what appears in user interface. Since React runs in browser, any user can open browser DevTools (F12), inspect the client bundle or run direct Firestore SDK calls in console to attempt 'updateDoc' or 'deleteDoc' on menu item or user document. Client-side checks can be bypassed because the browser is under user's control. So the thing that actually stops unauthorized changes is [Firestore Security Rules] ('firestore.rules'), which enforced on Google's servers on every database read and write regardless of how the request was sent. If student attempts to update menu price directly, Firestore will evaluates the rule server-side and rejects the request with 'permission-denied'.
