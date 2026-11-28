@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth.js'
 
 function Header() {
   const { count } = useCart()
-  const { user, role, logout } = useAuth()
+  const { user, profile, role, logout } = useAuth()
   const navigate = useNavigate()
 
   async function handleLogout() {
@@ -26,7 +26,7 @@ function Header() {
       </NavLink>
       {user ? (
         <>
-        <span className="user-name">Hi, {user.displayName || user.email}</span>
+        <span className="user-name">Hi, {profile?.name || user.displayName || user.email}{role && `(${role})`}</span>
         <button type="button" className="link" onClick={handleLogout}>Log out</button>
         </>
         ) : (
