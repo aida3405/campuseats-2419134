@@ -1,0 +1,59 @@
+rules_version = '2';
+
+service cloud.firestore {
+    match /databases/{database}/documents {
+        function signedIn() { return request.auth != null; }
+        function isUser(uid) { return signedIn() && request.auth.uid == uid; }
+        function userDoc() { return /databases/$(database)/documents/users/$(request.auth.uid); }
+        function isAdmin() { return signedIn() && exists(userDoc()) && get(userDoc()).data.role == 'admin'; }
+        function vendorOwner(vendorId) {
+            return get(/databases/$(database)/documents/vendors/$(vendorId)).data.ownerUid;
+        }
+
+        match /users/{uid} {
+            allow read: if isUser(uid) || isAdmin();
+            allow create: if isUser(uid) && request.resource.data.role == 'student';
+            allow update: if isAdmin() || (isUser(uid) && request.resource.data.role == resource.data.role);
+            allow delete: if isAdmin();
+        }
+
+        match /vendors/{vendorId} {
+            allow read: if resource.data.approved == true || isAdmin()
+                || (signedIn() && resource.data.ownerUid == request.auth.uid);
+            allow create: if isAdmin() || (signedIn() && request.resource.data.ownerUid == request.auth.uid
+                && request.resource.data.approved == false);
+            allow update: if isAdmin() || (signedIn() && resource.data.ownerUid == request.auth.uid
+                && request.resource.data.approved == resource.data.approved
+                && request.resource.data.ownerUid == resource.data.ownerUid);
+            allow delete: if isAdmin();
+
+            match /menu/{itemId} {
+                allow read: if true;
+                allow write: if isAdmin() || (signedIn() && vendorOwner(vendorId) == request.auth.uid);
+            }
+        }
+
+        match /orders/{orderId} {
+            allow read: if signedIn() && (resource.data.studentUid == request.auth.uid
+                || resource.data.vendorOwnerUid == request.auth.uid || isAdmin());
+            allow create: if signedIn()
+                && request.resource.data.studentUid == request.auth.uid
+                && request.resource.data.status == 'Received'
+                && request.resource.data.vendorOwnerUid == vendorOwner(request.resource.data.vendorId);
+            allow create: if false;
+            allow update: if signedIn()
+                && resource.data.vendorOwnerUid == request.auth.uid
+                && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+            allow update: if false;
+            allow update: if signedIn()
+                && resource.data.studentUid == request.auth.uid
+                && resource.data.status == 'Received'
+                && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['pickupTime']);
+            allow delete: if signedIn()
+                && resource.data.studentUid == request.auth.uid
+                && resource.data.status == 'Received';
+            allow update: if false;
+            allow delete: if false;
+        }
+    }
+}
